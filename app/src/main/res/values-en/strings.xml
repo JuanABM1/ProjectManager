@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Project Manager</string>
+
+    <string name="content_description_logo">Logo</string>
+    <string name="text_view_login">Login</string>
+    <string name="edit_text_username">Username</string>
+    <string name="edit_text_password">Password</string>
+
+</resources>

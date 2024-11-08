@@ -1,3 +1,9 @@
 <resources>
-    <string name="app_name">ProjectManager</string>
+    <string name="app_name">Gestor de Proyectos</string>
+
+    <string name="content_description_logo">Logo</string>
+    <string name="text_view_login">Iniciar Sesión</string>
+    <string name="edit_text_username">Nombre de usuario</string>
+    <string name="edit_text_password">Contraseña</string>
+
 </resources>

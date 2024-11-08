@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Gestor de Projectes</string>
+
+    <string name="content_description_logo">Logo</string>
+    <string name="text_view_login">Iniciar Sessió</string>
+    <string name="edit_text_username">Nom d\'usuari</string>
+    <string name="edit_text_password">Contrasenya</string>
+</resources>
