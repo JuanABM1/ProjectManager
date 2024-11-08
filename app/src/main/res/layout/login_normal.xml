@@ -12,8 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="180dp"
         android:contentDescription="@string/content_description_logo"
-        app:srcCompat="@drawable/logo"
-        />
+        app:srcCompat="@drawable/logo"/>
 
     <TextView
         android:id="@+id/TextViewLogin"
@@ -42,8 +41,7 @@
         android:autofillHints=""
         android:hint="@string/edit_text_password"
         android:inputType="textPassword"
-        android:textSize="30sp"
-        />
+        android:textSize="30sp"/>
 
     <Button
         android:id="@+id/ButtonLogin"
