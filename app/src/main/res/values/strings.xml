@@ -6,4 +6,7 @@
     <string name="edit_text_username">Nombre de usuario</string>
     <string name="edit_text_password">Contraseña</string>
 
+    <string name="text_view_login_admin">Entrar como administrador</string>
+
+    <string name="text_view_error_in_login">El usuario y/o la contraseña son incorrectos</string>
 </resources>

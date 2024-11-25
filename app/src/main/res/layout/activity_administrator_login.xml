@@ -1,17 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
     android:background="@color/logoBackground">
 
+
     <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="match_parent"
+        android:id="@+id/imageViewBack"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:srcCompat="@drawable/back" />
+
+    <ImageView
+        android:id="@+id/imageViewLogo"
+        android:layout_width="180dp"
         android:layout_height="180dp"
+        android:layout_gravity="center"
         android:contentDescription="@string/content_description_logo"
         android:layout_marginTop="0dp"
         app:srcCompat="@drawable/logo"/>
@@ -20,8 +27,8 @@
         android:id="@+id/TextViewLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/text_view_login"
-        android:textSize="36sp"
+        android:text="@string/text_view_login_admin"
+        android:textSize="32sp"
         android:layout_gravity="center"
         android:layout_marginBottom="32dp"/>
 

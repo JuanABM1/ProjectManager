@@ -7,4 +7,7 @@
     <string name="edit_text_username">Username</string>
     <string name="edit_text_password">Password</string>
 
+    <string name="text_view_login_admin">Login as administrator</string>
+    <string name="text_view_error_in_login">The username and/or password are incorrect</string>
+
 </resources>

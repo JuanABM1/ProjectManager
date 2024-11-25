@@ -5,4 +5,5 @@
     <color name="logoBackground">#efe3cd</color>
     <color name="beige">#faedda</color>
     <color name="green">#35786e</color>
+    <color name="red">#FF0000</color>
 </resources>
