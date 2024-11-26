@@ -2,6 +2,7 @@ package com.example.projectmanager
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -56,7 +57,9 @@ class NormalLogin : AppCompatActivity() {
             }else{
                 errorText.visibility = View.VISIBLE
                 editTextUsername.text = null
+                editTextUsername.setHintTextColor(Color.RED)
                 editTextPassword.text = null
+                editTextPassword.setHintTextColor(Color.RED)
             }
         }
 

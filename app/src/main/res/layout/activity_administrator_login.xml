@@ -60,4 +60,17 @@
         android:textSize="30sp"
         android:textColor="@color/black"/>
 
+
+    <TextView
+        android:id="@+id/ErrorTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/text_view_error_in_login"
+        android:textColor="@color/red"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textSize="25sp"
+        android:layout_marginTop="20dp"
+        android:visibility="invisible"/>
+
 </LinearLayout>
