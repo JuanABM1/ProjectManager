@@ -9,4 +9,7 @@
 
     <string name="text_view_login_admin">Entrar com a administrador</string>
     <string name="text_view_error_in_login">L\'usuari i/o la contrasenya són incorrectes</string>
+    <string name="home_icon_menu">Inici</string>
+    <string name="tasks_icon_menu">Tasques</string>
+    <string name="user_icon_menu">Perfil</string>
 </resources>

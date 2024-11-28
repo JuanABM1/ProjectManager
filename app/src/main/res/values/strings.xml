@@ -9,4 +9,10 @@
     <string name="text_view_login_admin">Entrar como administrador</string>
 
     <string name="text_view_error_in_login">El usuario y/o la contraseña son incorrectos</string>
+
+    <string name="home_icon_menu">Inicio</string>
+    <string name="tasks_icon_menu">Tareas</string>
+    <string name="user_icon_menu">Perfil</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

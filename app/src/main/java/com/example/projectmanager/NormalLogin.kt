@@ -52,7 +52,7 @@ class NormalLogin : AppCompatActivity() {
                     it.rol == "usuario"}
 
             if (validUsers != null){
-                val intent = Intent(this, AdministratorLogin::class.java)
+                val intent = Intent(this, MainPageUsers::class.java)
                 startActivity(intent)
             }else{
                 errorText.visibility = View.VISIBLE
