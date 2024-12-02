@@ -1,10 +1,7 @@
 package com.example.projectmanager
 
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
@@ -13,14 +10,16 @@ class MainPageUsers : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_page_users)
 
-        val firstFragment = HomeFragment()
+        val user = intent.getSerializableExtra("user") as User
+
+        val firstFragment = HomeFragment.newInstance(user)
         val secondFragment = TaskFragment()
         val thirdFragment = ProfileFragment()
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
 
         setCurrentFragment(firstFragment)
 
-        bottomNavigationView.setOnNavigationItemSelectedListener {
+        bottomNavigationView.setOnItemSelectedListener {
             when(it.itemId){
                 R.id.home->setCurrentFragment(firstFragment)
                 R.id.tasks->setCurrentFragment(secondFragment)
@@ -32,6 +31,14 @@ class MainPageUsers : AppCompatActivity() {
 
     private fun setCurrentFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction().apply {
+
+            setCustomAnimations(
+                R.anim.fragment_slide_in,
+                R.anim.fragment_slide_out,
+                R.anim.fragment_slide_in_reverse,
+                R.anim.fragment_slide_out_reverse
+            )
+
             replace(R.id.flFragment, fragment)
             commit()
         }

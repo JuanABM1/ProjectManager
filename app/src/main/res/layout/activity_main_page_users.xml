@@ -28,6 +28,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/bottom_nav_menu"
+        android:background="@color/beige"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

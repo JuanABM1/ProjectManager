@@ -1,10 +1,10 @@
 package com.example.projectmanager
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.View
 import android.widget.Button
@@ -27,7 +27,6 @@ class NormalLogin : AppCompatActivity() {
     private val clickMax = 5
     private val gson = Gson()
 
-    @SuppressLint("ResourceAsColor")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.login_normal)
@@ -40,19 +39,20 @@ class NormalLogin : AppCompatActivity() {
 
         loginButton.setBackgroundColor(ContextCompat.getColor(this, R.color.green))
 
-        //crearArchivo()
+        crearArchivo()
         val users = loadUsers()
 
         loginButton.setOnClickListener{
             val enteredUsername = editTextUsername.text.toString().trim()
             val enteredPassword = editTextPassword.text.toString().trim()
 
-            val validUsers = users.find { it.usuario == enteredUsername &&
+            val validUser = users.find { it.usuario == enteredUsername &&
                     it.password == enteredPassword &&
                     it.rol == "usuario"}
 
-            if (validUsers != null){
+            if (validUser != null){
                 val intent = Intent(this, MainPageUsers::class.java)
+                intent.putExtra("user", validUser)
                 startActivity(intent)
             }else{
                 errorText.visibility = View.VISIBLE
@@ -73,20 +73,22 @@ class NormalLogin : AppCompatActivity() {
 
                 clickCount = 0
             }
-            Handler().postDelayed({
+            Handler(Looper.getMainLooper()).postDelayed({
                 clickCount = 0
             }, 2000)
         }
-
-
     }
 
     private fun crearArchivo() {
-        val gson = Gson()
+
         val users = listOf(
-            User(1, "Juan Brito", "juanb", "juan1234", "desarrollador"),
-            User(2, "Enric Antunez", "enrica", "enric1234", "usuario", listOf(
-                Tarea(1, "prueba", 30, 30)
+            User(1, "Juan Brito", "admin", "admin", "desarrollador"),  // Desarrollador sin proyectos
+            User(2, "Enric Antunez", "cep", "informatica", "usuario", listOf(
+                Project(1, "Proyecto A", listOf(
+                    Task(1, "Tarea de prueba", 30, 30)
+                ), listOf(
+                    Invitation(1, "pendiente")
+                ))
             ))
         )
 
@@ -97,6 +99,24 @@ class NormalLogin : AppCompatActivity() {
         FileWriter(file).use { writer ->
             writer.write(jsonString)
         }
+        /*
+        val gson = Gson()
+        val users = listOf(
+            User(1, "Juan Brito", "juanb", "juan1234", "desarrollador"),
+            User(2, "Enric Antunez", "enrica", "enric1234", "usuario", listOf(
+                Task(1, "prueba", 30, 30)
+            ))
+        )
+
+        val jsonString = gson.toJson(users)
+
+        val filepath = "/data/data/com.example.projectmanager/files/json/data.json"
+        val file = File(filepath)
+        FileWriter(file).use { writer ->
+            writer.write(jsonString)
+        }
+
+         */
     }
 
     private fun loadUsers(): List<User> {

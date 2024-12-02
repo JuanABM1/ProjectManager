@@ -1,10 +1,8 @@
 package com.example.projectmanager
 
-import android.os.Parcel
-import android.os.Parcelable
 import java.io.Serializable
 
-class Tarea (
+class Task (
     val id_tarea: Int,
     val nombre_tarea: String,
     val horas_estimadas: Int,
