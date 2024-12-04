@@ -85,7 +85,13 @@ class NormalLogin : AppCompatActivity() {
             User(1, "Juan Brito", "admin", "admin", "desarrollador"),  // Desarrollador sin proyectos
             User(2, "Enric Antunez", "cep", "informatica", "usuario", listOf(
                 Project(1, "Proyecto A", listOf(
-                    Task(1, "Tarea de prueba", 30, 30)
+                    Task(1, "Tarea de prueba", 35, 30, "en progreso"),
+                    Task(2, "tarea de prueba 2", 30, 0, "pendiente")
+                ), listOf(
+                    Invitation(1, "pendiente")
+                )), Project(2, "Proyecto B", listOf(
+                    Task(3, "Tarea de prueba 3", 35, 30, "en progreso"),
+                    Task(4, "tarea de prueba 4", 30, 0, "pendiente")
                 ), listOf(
                     Invitation(1, "pendiente")
                 ))
@@ -99,24 +105,6 @@ class NormalLogin : AppCompatActivity() {
         FileWriter(file).use { writer ->
             writer.write(jsonString)
         }
-        /*
-        val gson = Gson()
-        val users = listOf(
-            User(1, "Juan Brito", "juanb", "juan1234", "desarrollador"),
-            User(2, "Enric Antunez", "enrica", "enric1234", "usuario", listOf(
-                Task(1, "prueba", 30, 30)
-            ))
-        )
-
-        val jsonString = gson.toJson(users)
-
-        val filepath = "/data/data/com.example.projectmanager/files/json/data.json"
-        val file = File(filepath)
-        FileWriter(file).use { writer ->
-            writer.write(jsonString)
-        }
-
-         */
     }
 
     private fun loadUsers(): List<User> {

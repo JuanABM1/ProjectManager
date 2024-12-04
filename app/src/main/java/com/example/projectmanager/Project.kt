@@ -9,4 +9,10 @@ class Project (
     val tasks: List<Task>,
     val invitations: List<Invitation>
 
-) : Serializable
+) : Serializable {
+
+    fun getPendingTasksCount(): Int {
+        return tasks.count() {it.estado == "pendiente"}
+    }
+}
+
