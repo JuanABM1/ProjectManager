@@ -13,7 +13,7 @@ class MainPageUsers : AppCompatActivity() {
         val user = intent.getSerializableExtra("user") as User
 
         val firstFragment = HomeFragment.newInstance(user)
-        val secondFragment = TaskFragment()
+        val secondFragment = TaskFragment.newInstance(user)
         val thirdFragment = ProfileFragment()
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
 
