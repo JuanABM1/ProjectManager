@@ -5,37 +5,38 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
-    android:background="@color/logoBackground">
-
+    android:background="@color/logoBackground"
+    >
 
     <ImageView
         android:id="@+id/imageViewBack"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         app:srcCompat="@drawable/back" />
 
     <ImageView
         android:id="@+id/imageViewLogo"
-        android:layout_width="180dp"
-        android:layout_height="180dp"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
         android:layout_gravity="center"
+        android:layout_marginBottom="20dp"
         android:contentDescription="@string/content_description_logo"
-        android:layout_marginTop="0dp"
-        app:srcCompat="@drawable/logo"/>
+        app:srcCompat="@drawable/logo" />
 
     <TextView
         android:id="@+id/TextViewLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/text_view_login_admin"
-        android:textSize="32sp"
+        android:textSize="36sp"
         android:layout_gravity="center"
         android:layout_marginBottom="32dp"/>
 
     <EditText
         android:id="@+id/EditTextUsername"
-        android:layout_width="match_parent"
+        android:layout_width="750dp"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_marginBottom="16dp"
         android:autofillHints=""
         android:hint="@string/edit_text_username"
@@ -44,33 +45,32 @@
 
     <EditText
         android:id="@+id/EditTextPassword"
-        android:layout_width="match_parent"
+        android:layout_width="750dp"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_marginBottom="40dp"
         android:autofillHints=""
         android:hint="@string/edit_text_password"
         android:inputType="textPassword"
-        android:textSize="30sp"/>
+        android:textSize="30sp" />
 
     <Button
         android:id="@+id/ButtonLogin"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_width="650dp"
+        android:layout_height="80dp"
         android:text="@string/text_view_login"
-        android:textSize="30sp"
-        android:textColor="@color/black"/>
-
+        android:textSize="40sp"
+        android:textColor="@color/black"
+        android:layout_gravity="center"/>
 
     <TextView
-        android:id="@+id/ErrorTextView"
+        android:id="@+id/TextViewError"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/text_view_error_in_login"
-        android:textColor="@color/red"
         android:layout_gravity="center"
-        android:gravity="center"
-        android:textSize="25sp"
-        android:layout_marginTop="20dp"
+        android:textColor="@color/red"
+        android:textSize="45sp"
         android:visibility="invisible"/>
 
 </LinearLayout>
