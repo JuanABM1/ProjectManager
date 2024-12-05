@@ -83,7 +83,7 @@ class NormalLogin : AppCompatActivity() {
 
         val users = listOf(
             User(1, "Juan Brito", "admin", "admin", "desarrollador"),  // Desarrollador sin proyectos
-            User(2, "Enric Antunez", "cep", "informatica", "usuario", listOf(
+            User(2, "CEP", "cep", "informatica", "usuario", listOf(
                 Project(1, "Proyecto A", listOf(
                     Task(1, "Tarea de prueba", 35, 30, "en progreso"),
                     Task(2, "tarea de prueba 2", 30, 0, "pendiente")
