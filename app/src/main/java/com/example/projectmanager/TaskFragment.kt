@@ -16,12 +16,12 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
     private lateinit var recyclerViewNextWeek: RecyclerView
     private lateinit var recyclerViewLater: RecyclerView
 
-    // Recibir el objeto User en los argumentos del fragmento
+
     private lateinit var user: User
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // Obtener el objeto User de los argumentos
+
         arguments?.let {
             user = it.getSerializable("user") as User
         }
@@ -30,7 +30,6 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Categorizar las tareas
         val categorizedTasks = user.projects?.let { categorizeTasks(it) }
 
         // Configurar RecyclerView para "Esta semana"
@@ -69,7 +68,6 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
         val tasksNextWeek = mutableListOf<Task>()
         val tasksLater = mutableListOf<Task>()
 
-        // Formato para comparar fechas
         val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
 
         // Recorremos los proyectos y sus tareas

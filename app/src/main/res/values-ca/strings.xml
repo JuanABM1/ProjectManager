@@ -12,4 +12,5 @@
     <string name="home_icon_menu">Inici</string>
     <string name="tasks_icon_menu">Tasques</string>
     <string name="user_icon_menu">Perfil</string>
+    <string name="project_text_view">Projecte</string>
 </resources>

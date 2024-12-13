@@ -13,5 +13,6 @@
     <string name="home_icon_menu">Inicio</string>
     <string name="tasks_icon_menu">Tareas</string>
     <string name="user_icon_menu">Perfil</string>
+    <string name="project_text_view">Proyecto</string>
     <!-- TODO: Remove or change this placeholder text -->
 </resources>
