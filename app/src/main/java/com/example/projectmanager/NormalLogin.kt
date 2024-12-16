@@ -53,6 +53,7 @@ class NormalLogin : AppCompatActivity() {
 
             if (validUser != null){
                 val intent = Intent(this, MainPageUsers::class.java)
+                intent.putExtra("users", users as Serializable)
                 intent.putExtra("user", validUser)
                 startActivity(intent)
             }else{

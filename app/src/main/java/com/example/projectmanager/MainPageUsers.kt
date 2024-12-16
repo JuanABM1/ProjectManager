@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import java.io.Serializable
 
 class MainPageUsers : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -11,8 +12,9 @@ class MainPageUsers : AppCompatActivity() {
         setContentView(R.layout.activity_main_page_users)
 
         val user = intent.getSerializableExtra("user") as User
+        val users = intent.getSerializableExtra("users") as ArrayList<User>
 
-        val firstFragment = HomeFragment.newInstance(user)
+        val firstFragment = HomeFragment.newInstance(user, users)
         val secondFragment = TaskFragment.newInstance(user)
         val thirdFragment = ProfileFragment()
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
