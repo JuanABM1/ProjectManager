@@ -40,10 +40,19 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
         resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
-                loadProjects()
-                recyclerView.adapter?.notifyDataSetChanged()
+                val taskChanged = result.data?.getBooleanExtra("taskChanged", false) ?: false
+                if (taskChanged) {
+                    loadProjects()
+                    updateTasks()
+                    recyclerView.adapter?.notifyDataSetChanged()
+                }
             }
         }
+    }
+
+    private fun updateTasks() {
+        val tasksDueThisWeek = getTasksDueThisWeek()
+        taskListAdapter.updateTasks(tasksDueThisWeek)
     }
 
     override fun onCreateView(
@@ -96,9 +105,12 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private fun loadProjects() {
         val jsonString = File("/data/data/com.example.projectmanager/files/json/data.json").readText()
         val users: List<User> = Gson().fromJson(jsonString, object : TypeToken<List<User>>() {}.type)
+
         user.projects = users.find { it.id == user.id }?.projects ?: emptyList()
+
         projectList.clear()
         projectList.addAll(user.projects!!)
+        recyclerView.adapter?.notifyDataSetChanged()
     }
 
     private fun getTasksDueThisWeek(): List<Task> {

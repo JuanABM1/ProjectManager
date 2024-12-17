@@ -9,5 +9,5 @@ class Task (
     val fecha_inicio: String,
     val fecha_final: String,
     val descripcion: String,
-    val estado: String
+    var estado: String
 ) : Serializable

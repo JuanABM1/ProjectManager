@@ -14,5 +14,10 @@
     <string name="tasks_icon_menu">Tareas</string>
     <string name="user_icon_menu">Perfil</string>
     <string name="project_text_view">Proyecto</string>
-    <!-- TODO: Remove or change this placeholder text -->
+
+    <string-array name="task_states">
+        <item>pendiente</item>
+        <item>en progreso</item>
+        <item>completada</item>
+    </string-array>
 </resources>

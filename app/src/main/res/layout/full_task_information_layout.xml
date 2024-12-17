@@ -28,13 +28,11 @@
             android:text="Descripción de la tarea" />
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/taskState"
+    <Spinner
+        android:id="@+id/taskStateSpinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
         android:padding="10dp"
-        android:textSize="14sp"
-        android:text="Estado"
-        android:textStyle="italic" />
+        android:spinnerMode="dropdown"
+        android:entries="@array/task_states"/>
 </LinearLayout>

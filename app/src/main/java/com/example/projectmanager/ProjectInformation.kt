@@ -1,6 +1,8 @@
 package com.example.projectmanager
 
+import FullTaskAdapter
 import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageView
@@ -52,8 +54,9 @@ class ProjectInformation : AppCompatActivity() {
 
         // Configurar RecyclerView de tareas
         recyclerViewTasks.layoutManager = LinearLayoutManager(this)
-        recyclerViewTasks.adapter = FullTaskAdapter(project.tasks) { task ->
-            Toast.makeText(this, "Tarea seleccionada: ${task.nombre_tarea}", Toast.LENGTH_SHORT).show()
+        recyclerViewTasks.adapter = FullTaskAdapter(project.tasks.toMutableList()) { updatedTask ->
+            updateTaskInJson(updatedTask)
+            recyclerViewTasks.adapter?.notifyDataSetChanged()
         }
 
         // Configurar RecyclerView de invitaciones
@@ -63,6 +66,44 @@ class ProjectInformation : AppCompatActivity() {
         // Configurar el botón de invitar personas
         inviteButton.setOnClickListener {
             Toast.makeText(this, "Función para invitar aún no implementada", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun updateTaskInJson(updatedTask: Task) {
+        try {
+            val file = File("/data/data/com.example.projectmanager/files/json/data.json")
+            if (!file.exists()) {
+                Toast.makeText(this, "El archivo de datos no existe", Toast.LENGTH_SHORT).show()
+                return
+            }
+
+            val jsonString = file.readText()
+            val users: MutableList<User> = Gson().fromJson(jsonString, object : TypeToken<MutableList<User>>() {}.type)
+
+            val userId = intent.extras?.getInt("userId") ?: return
+            val project = intent.extras?.getSerializable("project") as Project
+            val user = users.find { it.id == userId }
+
+            // Buscar el proyecto por id_project
+            val userProject = user?.projects?.find { it.id_project == project.id_project }
+
+            // Actualizar el estado de la tarea
+            val task = userProject?.tasks?.find { it.id_tarea == updatedTask.id_tarea }
+            task?.estado = updatedTask.estado
+
+            // Guardar los cambios en el archivo JSON
+            val updatedJsonString = Gson().toJson(users)
+            file.writeText(updatedJsonString)
+
+            // Notificar cambios
+            val resultIntent = Intent().apply {
+                putExtra("taskChanged", true) // Información opcional para identificar qué cambió
+            }
+            setResult(Activity.RESULT_OK, resultIntent)
+            Toast.makeText(this, "Estado de la tarea actualizado", Toast.LENGTH_SHORT).show()
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Toast.makeText(this, "Error al actualizar la tarea: ${e.message}", Toast.LENGTH_LONG).show()
         }
     }
 

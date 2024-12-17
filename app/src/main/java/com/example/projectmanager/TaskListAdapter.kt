@@ -7,7 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
 class TaskListAdapter(
-    private val tasks: List<Task>,
+    private var tasks: List<Task>,
     private val onTaskClick: (Task) -> Unit
 ) : RecyclerView.Adapter<TaskListAdapter.TaskViewHolder>() {
 
@@ -32,5 +32,10 @@ class TaskListAdapter(
 
     override fun getItemCount(): Int {
         return tasks.size
+    }
+
+    fun updateTasks(newTasks: List<Task>) {
+        this.tasks = newTasks
+        notifyDataSetChanged()  // Notifica al RecyclerView que la lista ha cambiado
     }
 }
