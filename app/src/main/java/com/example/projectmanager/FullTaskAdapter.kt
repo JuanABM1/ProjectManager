@@ -12,21 +12,19 @@ class FullTaskAdapter(
 ) :
     RecyclerView.Adapter<FullTaskAdapter.FullTaskViewHolder>() {
 
-    // ViewHolder interno
     class FullTaskViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val taskName: TextView = view.findViewById(R.id.taskName)
         val taskDescription: TextView = view.findViewById(R.id.taskDescription)
         val taskState: TextView = view.findViewById(R.id.taskState)
     }
 
-    // Infla el diseño del ítem
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FullTaskViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.full_task_information_layout, parent, false)
         return FullTaskViewHolder(view)
     }
 
-    // Enlaza los datos del objeto Task al ViewHolder
+
     override fun onBindViewHolder(holder: FullTaskViewHolder, position: Int) {
         val task = taskList[position]
         holder.taskName.text = task.nombre_tarea
@@ -38,7 +36,6 @@ class FullTaskAdapter(
         }
     }
 
-    // Devuelve el tamaño de la lista
     override fun getItemCount(): Int {
         return taskList.size
     }

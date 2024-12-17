@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -28,12 +29,20 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private lateinit var projectList: ArrayList<Project>
     private lateinit var taskRecyclerView: RecyclerView
     private lateinit var taskListAdapter: TaskListAdapter
+    private lateinit var resultLauncher: ActivityResultLauncher<Intent>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             user = it.getSerializable("user") as User
             allUsers = it.getSerializable("users") as ArrayList<User>
+        }
+
+        resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                loadProjects()
+                recyclerView.adapter?.notifyDataSetChanged()
+            }
         }
     }
 
@@ -82,12 +91,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         taskRecyclerView.adapter = taskListAdapter
     }
 
-    var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode == Activity.RESULT_OK){
-            loadProjects()
-            recyclerView.adapter?.notifyDataSetChanged()
-        }
-    }
+
 
     private fun loadProjects() {
         val jsonString = File("/data/data/com.example.projectmanager/files/json/data.json").readText()

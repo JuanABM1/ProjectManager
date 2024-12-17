@@ -29,7 +29,7 @@ class ProjectInformation : AppCompatActivity() {
 
         createButton.setBackgroundColor(ContextCompat.getColor(this, R.color.green))
         inviteButton.setBackgroundColor(ContextCompat.getColor(this, R.color.green))
-        deleteButton.setBackgroundColor(ContextCompat.getColor(this, R.color.green))
+        deleteButton.setBackgroundColor(ContextCompat.getColor(this, R.color.red))
 
         deleteButton.setOnClickListener{
             deleteProject()
@@ -39,9 +39,14 @@ class ProjectInformation : AppCompatActivity() {
             finish()
         }
 
+        createButton.setOnClickListener{
+            Toast.makeText(this, "No se ha implementado la funcion de crear tareas", Toast.LENGTH_SHORT).show()
+        }
+
         val bundle = intent.extras
         val project = bundle!!.getSerializable("project") as Project
         val allUsers = bundle.getSerializable("allUsers") as List<User> // Lista completa de usuarios
+
 
         textViewProjectName.text = project.name_project
 
@@ -77,19 +82,15 @@ class ProjectInformation : AppCompatActivity() {
             val userId = intent.extras?.getInt("userId") ?: return
             val user = users.find { it.id == userId }
 
-            if (user == null) {
-                Toast.makeText(this, "Usuario no encontrado", Toast.LENGTH_SHORT).show()
-                return
-            }
+
 
             // Eliminar el proyecto del usuario
-            user.projects = user.projects?.filter { it.id_project != project.id_project } ?: emptyList()
+            user!!.projects = user.projects?.filter { it.id_project != project.id_project } ?: emptyList()
 
             // Guardar el archivo JSON actualizado
             val updatedJsonString = Gson().toJson(users)
             file.writeText(updatedJsonString)
 
-            Toast.makeText(this, "Proyecto eliminado con éxito", Toast.LENGTH_SHORT).show()
 
             // Devolver un resultado y cerrar la actividad
             setResult(Activity.RESULT_OK)
