@@ -2,6 +2,7 @@ package com.example.projectmanager
 
 import android.content.Intent
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -11,6 +12,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.google.gson.Gson
@@ -18,8 +20,7 @@ import java.io.File
 import java.io.FileReader
 import java.io.FileWriter
 import java.io.Serializable
-
-
+import java.time.LocalDate
 
 class NormalLogin : AppCompatActivity() {
 
@@ -52,6 +53,7 @@ class NormalLogin : AppCompatActivity() {
 
             if (validUser != null){
                 val intent = Intent(this, MainPageUsers::class.java)
+                intent.putExtra("users", users as Serializable)
                 intent.putExtra("user", validUser)
                 startActivity(intent)
             }else{
@@ -85,13 +87,33 @@ class NormalLogin : AppCompatActivity() {
             User(1, "Juan Brito", "admin", "admin", "desarrollador"),  // Desarrollador sin proyectos
             User(2, "CEP", "cep", "informatica", "usuario", listOf(
                 Project(1, "Proyecto A", listOf(
-                    Task(1, "Tarea de prueba", 35, 30, "en progreso"),
-                    Task(2, "tarea de prueba 2", 30, 0, "pendiente")
+                    Task(1,
+                        "Tarea de prueba",
+                        "2024-11-25",
+                        "2024-12-20",
+                        "descripcion primera tarea",
+                        "en progreso"),
+                    Task(2,
+                        "tarea de prueba 2",
+                        "2024-12-10",
+                        "2024-12-22",
+                        "descripción segunda tarea",
+                        "pendiente")
                 ), listOf(
                     Invitation(1, "pendiente")
                 )), Project(2, "Proyecto B", listOf(
-                    Task(3, "Tarea de prueba 3", 35, 30, "en progreso"),
-                    Task(4, "tarea de prueba 4", 30, 0, "pendiente")
+                    Task(3,
+                        "Tarea de prueba 3",
+                        "2024-11-30",
+                        "2025-12-7",
+                        "descripción tarea 3",
+                        "en progreso"),
+                    Task(4,
+                        "tarea de prueba 4",
+                        "2024-12-1",
+                        "2024-12-14",
+                        "descripcion tarea 4",
+                        "pendiente")
                 ), listOf(
                     Invitation(1, "pendiente")
                 ))

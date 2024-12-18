@@ -1,59 +1,107 @@
 package com.example.projectmanager
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import java.text.SimpleDateFormat
+import java.util.*
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [TaskFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class TaskFragment : Fragment(R.layout.fragment_task) {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+
+    private lateinit var recyclerViewThisWeek: RecyclerView
+    private lateinit var recyclerViewNextWeek: RecyclerView
+    private lateinit var recyclerViewLater: RecyclerView
+
+
+    private lateinit var user: User
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+            user = it.getSerializable("user") as User
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_task, container, false)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val categorizedTasks = user.projects?.let { categorizeTasks(it) }
+
+        // Configurar RecyclerView para "Esta semana"
+        recyclerViewThisWeek = view.findViewById(R.id.recyclerViewThisWeek)
+        recyclerViewThisWeek.layoutManager = LinearLayoutManager(requireContext())
+        recyclerViewThisWeek.adapter = TaskAdapter(
+            categorizedTasks?.get("thisWeek") ?: emptyList()) { task ->
+            // Acción al hacer clic en una tarea
+        }
+
+        // Configurar RecyclerView para "Próxima semana"
+        recyclerViewNextWeek = view.findViewById(R.id.recyclerViewNextWeek)
+        recyclerViewNextWeek.layoutManager = LinearLayoutManager(requireContext())
+        recyclerViewNextWeek.adapter = TaskAdapter(
+            categorizedTasks?.get("nextWeek") ?: emptyList()) { task ->
+            // Acción al hacer clic en una tarea
+        }
+
+        // Configurar RecyclerView para "Más tarde"
+        recyclerViewLater = view.findViewById(R.id.recyclerViewLater)
+        recyclerViewLater.layoutManager = LinearLayoutManager(requireContext())
+        recyclerViewLater.adapter = TaskAdapter(
+            categorizedTasks?.get("later") ?: emptyList()) { task ->
+            // Acción al hacer clic en una tarea
+        }
+    }
+
+    // Función para categorizar las tareas por fecha
+    private fun categorizeTasks(projects: List<Project>): Map<String, List<Task>> {
+        val calendar = Calendar.getInstance()
+        val currentDate = calendar.time
+        val currentWeek = calendar.get(Calendar.WEEK_OF_YEAR)
+        val currentYear = calendar.get(Calendar.YEAR)
+
+        val tasksThisWeek = mutableListOf<Task>()
+        val tasksNextWeek = mutableListOf<Task>()
+        val tasksLater = mutableListOf<Task>()
+
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+
+        // Recorremos los proyectos y sus tareas
+        for (project in projects) {
+            for (task in project.tasks) {
+                val taskDate = dateFormat.parse(task.fecha_final)
+
+                val taskCalendar = Calendar.getInstance()
+                taskCalendar.time = taskDate
+
+                val taskWeek = taskCalendar.get(Calendar.WEEK_OF_YEAR)
+                val taskYear = taskCalendar.get(Calendar.YEAR)
+
+                when {
+                    taskYear == currentYear && taskWeek == currentWeek -> tasksThisWeek.add(task)
+                    taskYear == currentYear && taskWeek == currentWeek + 1 -> tasksNextWeek.add(task)
+                    taskDate.after(currentDate) -> tasksLater.add(task)
+                }
+            }
+        }
+
+        return mapOf(
+            "thisWeek" to tasksThisWeek,
+            "nextWeek" to tasksNextWeek,
+            "later" to tasksLater
+        )
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment TaskFragment.
-         */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            TaskFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+        fun newInstance(user: User) = TaskFragment().apply {
+            arguments = Bundle().apply {
+                putSerializable("user", user)
             }
+        }
     }
 }

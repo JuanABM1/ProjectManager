@@ -8,5 +8,5 @@ class User (
     val usuario: String,
     val password: String,
     val rol: String,
-    val projects: List<Project>? = null
+    var projects: List<Project>? = null
 ) : Serializable
