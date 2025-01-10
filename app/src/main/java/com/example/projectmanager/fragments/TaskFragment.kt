@@ -35,26 +35,26 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
 
         val categorizedTasks = user.projects?.let { categorizeTasks(it) }
 
-        // Configurar RecyclerView para "Esta semana"
+
         recyclerViewThisWeek = view.findViewById(R.id.recyclerViewThisWeek)
         recyclerViewThisWeek.layoutManager = LinearLayoutManager(requireContext())
         recyclerViewThisWeek.adapter = TaskAdapter(
             categorizedTasks?.get("thisWeek") ?: emptyList())
 
-        // Configurar RecyclerView para "Próxima semana"
+
         recyclerViewNextWeek = view.findViewById(R.id.recyclerViewNextWeek)
         recyclerViewNextWeek.layoutManager = LinearLayoutManager(requireContext())
         recyclerViewNextWeek.adapter = TaskAdapter(
             categorizedTasks?.get("nextWeek") ?: emptyList())
 
-        // Configurar RecyclerView para "Más tarde"
+
         recyclerViewLater = view.findViewById(R.id.recyclerViewLater)
         recyclerViewLater.layoutManager = LinearLayoutManager(requireContext())
         recyclerViewLater.adapter = TaskAdapter(
             categorizedTasks?.get("later") ?: emptyList())
     }
 
-    // Función para categorizar las tareas por fecha
+
     private fun categorizeTasks(projects: List<Project>): Map<String, List<Task>> {
         val calendar = Calendar.getInstance()
         val currentDate = calendar.time
@@ -67,7 +67,7 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
 
         val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
 
-        // Recorremos los proyectos y sus tareas
+
         for (project in projects) {
             for (task in project.tasks) {
                 val taskDate = dateFormat.parse(task.fecha_final)

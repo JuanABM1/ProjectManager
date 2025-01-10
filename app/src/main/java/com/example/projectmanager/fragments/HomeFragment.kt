@@ -119,13 +119,12 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         val calendar = Calendar.getInstance()
         val currentDate = calendar.time
 
-        // Calcular el final de la semana
+
         val dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK)
         val daysUntilEndOfWeek = Calendar.SATURDAY - dayOfWeek
         calendar.add(Calendar.DAY_OF_YEAR, daysUntilEndOfWeek)
         val endOfWeek = calendar.time
 
-        // Formateador para convertir fechas
         val formatter = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
 
         user.projects?.forEach { project ->

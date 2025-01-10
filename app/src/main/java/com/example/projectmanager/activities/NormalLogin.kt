@@ -13,7 +13,6 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import com.example.projectmanager.dataModels.Invitation
 import com.example.projectmanager.dataModels.Project
 import com.example.projectmanager.R
 import com.example.projectmanager.dataModels.Task

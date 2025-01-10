@@ -44,8 +44,6 @@ class RecyclerViewProjectsAdapter(
         holder.cardView.setOnClickListener {
             onItemClick(project)
         }
-
-
     }
 
     override fun getItemCount(): Int {

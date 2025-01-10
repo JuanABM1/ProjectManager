@@ -43,7 +43,7 @@ class ProjectInformation : AppCompatActivity() {
 
         val bundle = intent.extras
         val project = bundle!!.getSerializable("project") as Project
-        val allUsers = bundle.getSerializable("allUsers") as List<User> // Lista completa de usuarios
+
 
 
         textViewProjectName.text = project.name_project
