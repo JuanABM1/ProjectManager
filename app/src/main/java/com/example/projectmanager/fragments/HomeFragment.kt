@@ -1,4 +1,4 @@
-package com.example.projectmanager
+package com.example.projectmanager.fragments
 
 import android.app.Activity
 import android.content.Intent
@@ -13,6 +13,13 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.projectmanager.dataModels.Project
+import com.example.projectmanager.R
+import com.example.projectmanager.dataModels.Task
+import com.example.projectmanager.dataModels.User
+import com.example.projectmanager.activities.ProjectInformation
+import com.example.projectmanager.adapters.RecyclerViewProjectsAdapter
+import com.example.projectmanager.adapters.TaskListAdapter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.io.File
@@ -75,28 +82,22 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         projectList = ArrayList(user.projects)
 
         val recyclerViewProjectsAdapter = RecyclerViewProjectsAdapter(projectList,
-            { project ->
-                val intent = Intent(requireContext(), ProjectInformation::class.java)
-                val bundle = Bundle()
-                bundle.putSerializable("project", project)
-                bundle.putSerializable("allUsers", allUsers as Serializable)
-                intent.putExtra("userId", user.id)
-                intent.putExtras(bundle)
-                resultLauncher.launch(intent)
-            },
-            {
-                Toast.makeText(requireContext(), "Clic en: crear", Toast.LENGTH_SHORT).show()
-            }
-        )
+        ) { project ->
+            val intent = Intent(requireContext(), ProjectInformation::class.java)
+            val bundle = Bundle()
+            bundle.putSerializable("project", project)
+            bundle.putSerializable("allUsers", allUsers as Serializable)
+            intent.putExtra("userId", user.id)
+            intent.putExtras(bundle)
+            resultLauncher.launch(intent)
+        }
         recyclerView.adapter = recyclerViewProjectsAdapter
 
         taskRecyclerView = view.findViewById(R.id.recyclerViewTasks)
         taskRecyclerView.layoutManager = LinearLayoutManager(requireContext())
 
         val tasksDueThisWeek = getTasksDueThisWeek()
-        taskListAdapter = TaskListAdapter(tasksDueThisWeek) { task ->
-            Toast.makeText(requireContext(), "click en tareas", Toast.LENGTH_SHORT).show()
-        }
+        taskListAdapter = TaskListAdapter(tasksDueThisWeek)
         taskRecyclerView.adapter = taskListAdapter
     }
 
@@ -118,13 +119,12 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         val calendar = Calendar.getInstance()
         val currentDate = calendar.time
 
-        // Calcular el final de la semana
+
         val dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK)
         val daysUntilEndOfWeek = Calendar.SATURDAY - dayOfWeek
         calendar.add(Calendar.DAY_OF_YEAR, daysUntilEndOfWeek)
         val endOfWeek = calendar.time
 
-        // Formateador para convertir fechas
         val formatter = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
 
         user.projects?.forEach { project ->

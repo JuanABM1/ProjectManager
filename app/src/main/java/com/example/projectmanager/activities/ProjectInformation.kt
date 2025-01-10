@@ -1,6 +1,6 @@
-package com.example.projectmanager
+package com.example.projectmanager.activities
 
-import FullTaskAdapter
+import com.example.projectmanager.adapters.FullTaskAdapter
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
@@ -12,6 +12,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.projectmanager.dataModels.Project
+import com.example.projectmanager.R
+import com.example.projectmanager.dataModels.Task
+import com.example.projectmanager.dataModels.User
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.io.File
@@ -24,13 +28,9 @@ class ProjectInformation : AppCompatActivity() {
         val textViewProjectName = findViewById<TextView>(R.id.ProjectName)
         val imageViewBack = findViewById<ImageView>(R.id.backButton)
         val recyclerViewTasks = findViewById<RecyclerView>(R.id.recyclerViewTasks)
-        val recyclerViewInvitations = findViewById<RecyclerView>(R.id.recyclerViewInvitations)
-        val inviteButton = findViewById<Button>(R.id.buttonInvitate)
-        val createButton = findViewById<Button>(R.id.ButtonCreateTask)
         val deleteButton = findViewById<Button>(R.id.buttonDelete)
 
-        createButton.setBackgroundColor(ContextCompat.getColor(this, R.color.green))
-        inviteButton.setBackgroundColor(ContextCompat.getColor(this, R.color.green))
+
         deleteButton.setBackgroundColor(ContextCompat.getColor(this, R.color.red))
 
         deleteButton.setOnClickListener{
@@ -41,13 +41,9 @@ class ProjectInformation : AppCompatActivity() {
             finish()
         }
 
-        createButton.setOnClickListener{
-            Toast.makeText(this, "No se ha implementado la funcion de crear tareas", Toast.LENGTH_SHORT).show()
-        }
-
         val bundle = intent.extras
         val project = bundle!!.getSerializable("project") as Project
-        val allUsers = bundle.getSerializable("allUsers") as List<User> // Lista completa de usuarios
+
 
 
         textViewProjectName.text = project.name_project
@@ -57,15 +53,6 @@ class ProjectInformation : AppCompatActivity() {
         recyclerViewTasks.adapter = FullTaskAdapter(project.tasks.toMutableList()) { updatedTask ->
             updateTaskInJson(updatedTask)
             recyclerViewTasks.adapter?.notifyDataSetChanged()
-        }
-
-        // Configurar RecyclerView de invitaciones
-        recyclerViewInvitations.layoutManager = LinearLayoutManager(this)
-        recyclerViewInvitations.adapter = InvitationAdapter(project.invitations, allUsers)
-
-        // Configurar el botón de invitar personas
-        inviteButton.setOnClickListener {
-            Toast.makeText(this, "Función para invitar aún no implementada", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -84,18 +71,14 @@ class ProjectInformation : AppCompatActivity() {
             val project = intent.extras?.getSerializable("project") as Project
             val user = users.find { it.id == userId }
 
-            // Buscar el proyecto por id_project
             val userProject = user?.projects?.find { it.id_project == project.id_project }
 
-            // Actualizar el estado de la tarea
             val task = userProject?.tasks?.find { it.id_tarea == updatedTask.id_tarea }
             task?.estado = updatedTask.estado
 
-            // Guardar los cambios en el archivo JSON
             val updatedJsonString = Gson().toJson(users)
             file.writeText(updatedJsonString)
 
-            // Notificar cambios
             val resultIntent = Intent().apply {
                 putExtra("taskChanged", true) // Información opcional para identificar qué cambió
             }
@@ -124,16 +107,12 @@ class ProjectInformation : AppCompatActivity() {
             val user = users.find { it.id == userId }
 
 
-
-            // Eliminar el proyecto del usuario
             user!!.projects = user.projects?.filter { it.id_project != project.id_project } ?: emptyList()
 
-            // Guardar el archivo JSON actualizado
             val updatedJsonString = Gson().toJson(users)
             file.writeText(updatedJsonString)
 
 
-            // Devolver un resultado y cerrar la actividad
             setResult(Activity.RESULT_OK)
             finish()
 

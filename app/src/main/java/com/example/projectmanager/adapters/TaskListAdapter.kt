@@ -1,14 +1,15 @@
-package com.example.projectmanager
+package com.example.projectmanager.adapters
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.projectmanager.R
+import com.example.projectmanager.dataModels.Task
 
 class TaskListAdapter(
-    private var tasks: List<Task>,
-    private val onTaskClick: (Task) -> Unit
+    private var tasks: List<Task>
 ) : RecyclerView.Adapter<TaskListAdapter.TaskViewHolder>() {
 
     class TaskViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -24,10 +25,6 @@ class TaskListAdapter(
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
         val task = tasks[position]
         holder.taskName.text = task.nombre_tarea
-
-        holder.itemView.setOnClickListener {
-            onTaskClick(task)
-        }
     }
 
     override fun getItemCount(): Int {
@@ -36,6 +33,6 @@ class TaskListAdapter(
 
     fun updateTasks(newTasks: List<Task>) {
         this.tasks = newTasks
-        notifyDataSetChanged()  // Notifica al RecyclerView que la lista ha cambiado
+        notifyDataSetChanged()
     }
 }

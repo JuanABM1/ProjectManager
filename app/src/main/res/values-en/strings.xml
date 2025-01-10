@@ -13,5 +13,21 @@
     <string name="tasks_icon_menu">Tasks</string>
     <string name="user_icon_menu">Profile</string>
     <string name="project_text_view">Project</string>
+    <string name="nombre">Name:</string>
+    <string name="tareas">Tasks</string>
+    <string name="eliminar_proyecto">Delete project</string>
+    <string name="bienvenido_de_vuelta">Welcome back</string>
+    <string name="tus_proyectos">Your projects</string>
+    <string name="tareas_proximas_a_finalizar">tasks close to completion</string>
+    <string name="tus_tareas">Your tasks</string>
+    <string name="esta_semana">This Week</string>
+    <string name="proxima_semana">Next Week</string>
+    <string name="mas_tarde">Later</string>
 
+
+    <string-array name="task_states">
+        <item>Pending</item>
+        <item>In progress</item>
+        <item>Completed</item>
+    </string-array>
 </resources>
