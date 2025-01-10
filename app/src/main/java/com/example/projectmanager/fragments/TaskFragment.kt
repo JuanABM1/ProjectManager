@@ -1,12 +1,15 @@
-package com.example.projectmanager
+package com.example.projectmanager.fragments
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.projectmanager.dataModels.Project
+import com.example.projectmanager.R
+import com.example.projectmanager.dataModels.Task
+import com.example.projectmanager.dataModels.User
+import com.example.projectmanager.adapters.TaskAdapter
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -36,25 +39,19 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
         recyclerViewThisWeek = view.findViewById(R.id.recyclerViewThisWeek)
         recyclerViewThisWeek.layoutManager = LinearLayoutManager(requireContext())
         recyclerViewThisWeek.adapter = TaskAdapter(
-            categorizedTasks?.get("thisWeek") ?: emptyList()) { task ->
-            // Acción al hacer clic en una tarea
-        }
+            categorizedTasks?.get("thisWeek") ?: emptyList())
 
         // Configurar RecyclerView para "Próxima semana"
         recyclerViewNextWeek = view.findViewById(R.id.recyclerViewNextWeek)
         recyclerViewNextWeek.layoutManager = LinearLayoutManager(requireContext())
         recyclerViewNextWeek.adapter = TaskAdapter(
-            categorizedTasks?.get("nextWeek") ?: emptyList()) { task ->
-            // Acción al hacer clic en una tarea
-        }
+            categorizedTasks?.get("nextWeek") ?: emptyList())
 
         // Configurar RecyclerView para "Más tarde"
         recyclerViewLater = view.findViewById(R.id.recyclerViewLater)
         recyclerViewLater.layoutManager = LinearLayoutManager(requireContext())
         recyclerViewLater.adapter = TaskAdapter(
-            categorizedTasks?.get("later") ?: emptyList()) { task ->
-            // Acción al hacer clic en una tarea
-        }
+            categorizedTasks?.get("later") ?: emptyList())
     }
 
     // Función para categorizar las tareas por fecha

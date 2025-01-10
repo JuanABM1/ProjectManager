@@ -9,8 +9,4 @@
         android:id="@+id/tasks"
         android:title="@string/tasks_icon_menu"
         android:icon="@drawable/task"/>
-    <item
-        android:id="@+id/settings"
-        android:title="@string/user_icon_menu"
-        android:icon="@drawable/user"/>
 </menu>

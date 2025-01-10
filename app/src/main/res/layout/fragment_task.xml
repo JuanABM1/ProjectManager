@@ -3,32 +3,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TaskFragment"
+    tools:context=".fragments.TaskFragment"
     android:background="@color/beige"
     android:paddingStart="20dp"
     android:paddingEnd="20dp">
 
-    <!-- Titulo de la pantalla -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Tus Tareas"
+        android:text="@string/tus_tareas"
         android:textSize="40sp"
         android:textStyle="bold|italic"
         android:paddingTop="20dp"/>
 
-    <!-- Encabezado para la sección "Esta semana" -->
     <TextView
         android:id="@+id/textViewThisWeek"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Esta semana"
+        android:text="@string/esta_semana"
         android:textSize="30sp"
         android:textStyle="bold"
         android:layout_marginTop="70dp"
         />
 
-    <!-- RecyclerView para mostrar las tareas de esta semana -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewThisWeek"
         android:layout_width="match_parent"
@@ -36,18 +33,16 @@
         android:layout_marginTop="110dp"
         />
 
-    <!-- Encabezado para la sección "Próxima semana" -->
     <TextView
         android:id="@+id/textViewNextWeek"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Próxima semana"
+        android:text="@string/proxima_semana"
         android:textSize="30sp"
         android:layout_marginTop="310dp"
         android:textStyle="bold"
         />
 
-    <!-- RecyclerView para mostrar las tareas de la próxima semana -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewNextWeek"
         android:layout_width="match_parent"
@@ -55,12 +50,11 @@
         android:layout_marginTop="350dp"
         />
 
-    <!-- Encabezado para la sección "Más tarde" -->
     <TextView
         android:id="@+id/textViewLater"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Más tarde"
+        android:text="@string/mas_tarde"
         android:textSize="30sp"
         android:layout_marginTop="550dp"
         android:textStyle="bold"

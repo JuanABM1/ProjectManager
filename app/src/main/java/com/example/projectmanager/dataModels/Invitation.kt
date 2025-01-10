@@ -1,4 +1,4 @@
-package com.example.projectmanager
+package com.example.projectmanager.dataModels
 
 import java.io.Serializable
 

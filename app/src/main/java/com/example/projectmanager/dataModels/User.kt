@@ -1,4 +1,4 @@
-package com.example.projectmanager
+package com.example.projectmanager.dataModels
 
 import java.io.Serializable
 
@@ -7,6 +7,5 @@ class User (
     val nombre: String,
     val usuario: String,
     val password: String,
-    val rol: String,
     var projects: List<Project>? = null
 ) : Serializable

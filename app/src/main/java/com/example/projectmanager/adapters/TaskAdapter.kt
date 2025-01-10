@@ -1,24 +1,19 @@
-package com.example.projectmanager
+package com.example.projectmanager.adapters
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.projectmanager.R
+import com.example.projectmanager.dataModels.Task
 
-class TaskAdapter(private val tasks: List<Task>, private val onClick: (Task) -> Unit) :
+class TaskAdapter(private val tasks: List<Task>) :
     RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
 
     inner class TaskViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val taskName: TextView = itemView.findViewById(R.id.taskName)
         val taskDescription: TextView = itemView.findViewById(R.id.taskDescription)
-
-        init {
-            itemView.setOnClickListener {
-                val task = tasks[adapterPosition]
-                onClick(task)
-            }
-        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
