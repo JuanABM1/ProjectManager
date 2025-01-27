@@ -171,25 +171,21 @@ class NormalLogin : AppCompatActivity() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun encriptarJSON(jsonString: String?, filepath: String) {
-        // Clave fija predefinida (debe tener 16, 24 o 32 bytes para AES)
-        val fixedKey = "1234567890123456".toByteArray(Charsets.UTF_8) // Clave de 16 bytes
+        val fixedKey = "1234567890123456".toByteArray(Charsets.UTF_8)
         val secretKey = SecretKeySpec(fixedKey, "AES")
 
         // Generar un IV (Vector de Inicialización)
-        val iv = ByteArray(16) // AES usa un IV de 16 bytes
+        val iv = ByteArray(16)
         java.security.SecureRandom().nextBytes(iv)
         val ivSpec = IvParameterSpec(iv)
 
-        // Configurar el cifrador AES en modo CBC con PKCS5Padding
         val cipher = Cipher.getInstance("AES/CBC/PKCS5Padding")
         cipher.init(Cipher.ENCRYPT_MODE, secretKey, ivSpec)
 
-        // Encriptar el JSON
         val encryptedBytes = cipher.doFinal(jsonString!!.toByteArray(Charsets.UTF_8))
 
-        // Codificar el texto encriptado y el IV en Base64 para guardarlos
         val encryptedBase64 = Base64.getEncoder().encodeToString(encryptedBytes)
-        val ivBase64 = Base64.getEncoder().encodeToString(iv) // seguramente pete
+        val ivBase64 = Base64.getEncoder().encodeToString(iv)
 
         // Guardar el archivo encriptado junto con el IV
         val file = File(filepath)
@@ -199,10 +195,9 @@ class NormalLogin : AppCompatActivity() {
         }
     }
 
-
     @RequiresApi(Build.VERSION_CODES.O)
     private fun loadUsers(): List<User> {
-        val file = File("/data/data/com.example.projectmanager/files/json/encrypted_data.json")
+        val file = File("/data/data/com.example.projectmanager/files/json/data.json")
 
         return try {
             val content = file.readText()
@@ -234,21 +229,6 @@ class NormalLogin : AppCompatActivity() {
             Log.e("Error", "Error al leer o desencriptar el archivo JSON", e)
             emptyList()
         }
-
-        /*
-        val file = File("/data/data/com.example.projectmanager/files/json/data.json")
-
-        return try {
-            val reader = FileReader(file)
-            val content = reader.readText()
-            reader.close()
-
-            gson.fromJson(content, Array<User>::class.java).toList()
-        } catch (e: Exception) {
-            Log.e("Error", "Error al leer el archivo JSON")
-            emptyList()
-        }
-
-         */
     }
+
 }
