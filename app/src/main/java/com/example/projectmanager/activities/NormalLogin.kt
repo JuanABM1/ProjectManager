@@ -156,17 +156,17 @@ class NormalLogin : AppCompatActivity() {
         // Convierte a JSON
         val jsonString = gson.toJson(processedUsers)
 
-        // Guarda el JSON en un archivo
-        val filepath = "/data/data/com.example.projectmanager/files/json/data.json"
-        
-        encriptarJSON(jsonString, filepath)
-        /*
-        val file = File(filepath)
-        FileWriter(file).use { writer ->
-            writer.write(jsonString)
+        val dir = filesDir
+        val filepath = "$dir/json/data.json"
+
+        val jsonDir = File(dir, "json")
+        if (!jsonDir.exists()) {
+            jsonDir.mkdirs() // Crea el directorio si no existe
         }
-        
-         */
+
+
+        encriptarJSON(jsonString, filepath)
+
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -174,7 +174,7 @@ class NormalLogin : AppCompatActivity() {
         val fixedKey = "1234567890123456".toByteArray(Charsets.UTF_8)
         val secretKey = SecretKeySpec(fixedKey, "AES")
 
-        // Generar un IV (Vector de Inicialización)
+
         val iv = ByteArray(16)
         java.security.SecureRandom().nextBytes(iv)
         val ivSpec = IvParameterSpec(iv)
@@ -187,7 +187,6 @@ class NormalLogin : AppCompatActivity() {
         val encryptedBase64 = Base64.getEncoder().encodeToString(encryptedBytes)
         val ivBase64 = Base64.getEncoder().encodeToString(iv)
 
-        // Guardar el archivo encriptado junto con el IV
         val file = File(filepath)
         FileWriter(file).use { writer ->
             writer.write("EncryptedData:$encryptedBase64\n")
@@ -197,33 +196,28 @@ class NormalLogin : AppCompatActivity() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun loadUsers(): List<User> {
-        val file = File("/data/data/com.example.projectmanager/files/json/data.json")
+        val dir = filesDir
+        val file = File(dir, "/json/data.json")
 
         return try {
             val content = file.readText()
 
-            // Extraer los datos encriptados y IV del archivo
             val encryptedData = content.substringAfter("EncryptedData:").substringBefore("\n").trim()
             val iv = content.substringAfter("IV:").trim()
 
-            // Decodificar los datos de Base64
             val encryptedBytes = Base64.getDecoder().decode(encryptedData)
             val ivBytes = Base64.getDecoder().decode(iv)
 
-            // Clave fija predefinida (debe coincidir con la usada en encriptación)
-            val fixedKey = "1234567890123456".toByteArray(Charsets.UTF_8) // Clave de 16 bytes
+            val fixedKey = "1234567890123456".toByteArray(Charsets.UTF_8)
             val secretKey = SecretKeySpec(fixedKey, "AES")
             val ivSpec = IvParameterSpec(ivBytes)
 
-            // Configurar el cifrador AES para desencriptar
             val cipher = Cipher.getInstance("AES/CBC/PKCS5Padding")
             cipher.init(Cipher.DECRYPT_MODE, secretKey, ivSpec)
 
-            // Desencriptar los datos
             val decryptedBytes = cipher.doFinal(encryptedBytes)
             val decryptedJson = String(decryptedBytes, Charsets.UTF_8)
 
-            // Convertir el JSON desencriptado a lista de usuarios
             gson.fromJson(decryptedJson, Array<User>::class.java).toList()
         } catch (e: Exception) {
             Log.e("Error", "Error al leer o desencriptar el archivo JSON", e)
