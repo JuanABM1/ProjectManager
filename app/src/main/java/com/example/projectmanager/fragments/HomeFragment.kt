@@ -2,6 +2,7 @@ package com.example.projectmanager.fragments
 
 import android.app.Activity
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,8 +12,10 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.projectmanager.DataManager
 import com.example.projectmanager.dataModels.Project
 import com.example.projectmanager.R
 import com.example.projectmanager.dataModels.Task
@@ -38,6 +41,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private lateinit var taskListAdapter: TaskListAdapter
     private lateinit var resultLauncher: ActivityResultLauncher<Intent>
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -55,6 +59,14 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 }
             }
         }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    override fun onResume() {
+        super.onResume()
+        loadProjects() // Recargar proyectos cada vez que se regrese a esta pantalla
+        updateTasks() // Si es necesario, actualiza las tareas también
+        recyclerView.adapter?.notifyDataSetChanged()
     }
 
     private fun updateTasks() {
@@ -102,17 +114,23 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     }
 
 
-
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun loadProjects() {
-        val jsonString = File("/data/data/com.example.projectmanager/files/json/data.json").readText()
-        val users: List<User> = Gson().fromJson(jsonString, object : TypeToken<List<User>>() {}.type)
+        try {
+            val users = DataManager.loadUsers(requireContext())
 
-        user.projects = users.find { it.id == user.id }?.projects ?: emptyList()
+            user.projects = users.find { it.id == user.id }?.projects ?: emptyList()
 
-        projectList.clear()
-        projectList.addAll(user.projects!!)
-        recyclerView.adapter?.notifyDataSetChanged()
+            projectList.clear()
+            projectList.addAll(user.projects!!)
+
+            recyclerView.adapter?.notifyDataSetChanged()
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Toast.makeText(requireContext(), "Error al cargar los proyectos: ${e.message}", Toast.LENGTH_LONG).show()
+        }
     }
+
 
     private fun getTasksDueThisWeek(): List<Task> {
         val tasksDueThisWeek = mutableListOf<Task>()
